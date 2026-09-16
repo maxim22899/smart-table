@@ -4,9 +4,9 @@ import {rules, createComparison} from "../lib/compare.js";
 export function initSearching(searchField) {
     // @todo: #5.1 — настроить компаратор
     const compare = createComparison(
-        {
-            ...rules.searchMultipleFields(searchField, ['date','customer', 'seller'], false)
-        }
+        [],
+        [rules.searchMultipleFields(searchField, ['date','customer', 'seller'], false)]
+        
     );
 
     return (data, state, action) => {
@@ -17,10 +17,11 @@ export function initSearching(searchField) {
         // @todo: #5.2 — применить компаратор
         if (!action || action.name !== 'search') {
             return data;
-        }
+        } 
 
         const filtered = data.filter(row => {
             const res = compare(row, state);
+            console.log('Строка:', row.customer, '| Результат compare:', res);
             if (res) console.log('Строка подходит:', row.customer);
             return res;
         });
