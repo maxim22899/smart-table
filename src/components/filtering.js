@@ -32,7 +32,18 @@ export function initFiltering(elements, indexes) {
             }
         }
 
+        let result = data.filter(row => compare(row, state));
+
+        if (state.totalFrom)  {
+            const min = Number(state.totalFrom);
+            result = result.filter(row => Number(row.total) >= min);
+        }
+        if (state.totalTo) {
+            const max = Number(state.totalTo);
+            result = result.filter(row => Number(row.total) <= max);
+        }
+
         // @todo: #4.5 — отфильтровать данные используя компаратор
-        return data.filter(row => compare(row, state));
+        return result;
     }
 }

@@ -44,9 +44,15 @@ function collectState() {
  * @param {HTMLButtonElement?} action
  */
 function render(action) {
+    console.log('--- render вызван ---');
+    console.log('action:', action);
+
+
     let state = collectState(); // состояние полей из таблицы
     let result = [...data]; // копируем для последующего изменения
     // @todo: использование
+
+
 
     result = applySearching(result, state, action);
 

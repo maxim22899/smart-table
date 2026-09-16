@@ -75,6 +75,8 @@ const rules = {
         return { continue: true };
     },
 
+    
+
     // Сравнение на включение подстроки
     // Подробнее: проверяет, содержит ли строка другую строку
     // без учёта регистра. Удобно для поиска по тексту.
@@ -204,7 +206,8 @@ const defaultRules = [
     'failOnEmptySource',
     'arrayAsRange',
     'stringIncludes',
-    'exactEquality'
+    'exactEquality',
+    
 ];
 
 /**
@@ -242,6 +245,7 @@ function compare(source, target, rulesList) {
             let ruleResult = null;
 
             for (const rule of rulesList) {
+                console.log('Применяем правило:', rule.name || 'анонимная функция', '| key:', key, '| sourceValue:', sourceValue, '| targetValue:', targetValue);
                 const ruleOutput = rule(key, sourceValue, targetValue, source, target);
 
                 // Проверяем, нужно ли пропустить это свойство
