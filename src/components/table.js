@@ -39,6 +39,14 @@ export function initTable(settings, onAction) {
 
     root.container.addEventListener('submit', (e) => {
         e.preventDefault();
+
+        const searchInput = root.container.querySelector('input[name="search"]');
+        const isSearchFocused = searchInput && document.activeElement === searchInput;
+        const isSearchEmpty = !searchInput || !searchInput.value.trim();
+
+        if (isSearchFocused && isSearchEmpty) {
+            return;
+        }
         onAction(e.submitter);
     });
 

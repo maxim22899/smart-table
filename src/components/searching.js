@@ -10,23 +10,20 @@ export function initSearching(searchField) {
     );
 
     return (data, state, action) => {
-        console.log('--- searching вызван ---');
-        console.log('action:', action);
-        console.log('state.search:', state.search);
+        
 
         // @todo: #5.2 — применить компаратор
-        if (!action || action.name !== 'search') {
+        if (!state.search || String(state.search).trim() === '') {
             return data;
         } 
 
         const filtered = data.filter(row => {
             const res = compare(row, state);
-            console.log('Строка:', row.customer, '| Результат compare:', res);
+        
             if (res) console.log('Строка подходит:', row.customer);
             return res;
         });
-        
-        console.log('Отфльтровано строк:', filtered.length);
+       
         return filtered;
     }
 }  

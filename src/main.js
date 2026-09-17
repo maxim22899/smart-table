@@ -44,8 +44,7 @@ function collectState() {
  * @param {HTMLButtonElement?} action
  */
 function render(action) {
-    console.log('--- render вызван ---');
-    console.log('action:', action);
+    
 
 
     let state = collectState(); // состояние полей из таблицы
@@ -55,10 +54,15 @@ function render(action) {
 
 
     result = applySearching(result, state, action);
+    
 
     result = applyFiltering(result, state, action);
-    result = applySorting(result, state, action);
+    
 
+    const isSearchActive = state.search && String(state.search).trim() !== '';
+    if (!isSearchActive) {
+    result = applySorting(result, state, action);
+    }
     result = applyPagination(result, state, action);
 
     sampleTable.render(result)
@@ -94,7 +98,7 @@ const applyFiltering = initFiltering(sampleTable.filter.elements, {
     searchBySeller: indexes.sellers
 });
 
-const applySearching = initSearching(sampleTable.search.elements.search);
+const applySearching = initSearching('search');
 
 
 const appRoot = document.querySelector('#app');
