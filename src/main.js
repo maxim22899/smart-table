@@ -1,13 +1,10 @@
 import "./fonts/ys-display/fonts.css";
 import "./style.css";
 
-import { data as sourceData } from "./data/dataset_1.js";
-
 import { initData } from "./data.js";
 import { processFormData } from "./lib/utils.js";
 
 import { initTable } from "./components/table.js";
-// @todo: подключение
 
 import { initPagination } from "./components/pagination.js";
 
@@ -16,7 +13,7 @@ import { initFiltering } from "./components/filtering.js";
 import { initSearching } from "./components/searching.js";
 
 // Исходные данные используемые в render()
-const api = initData(sourceData);
+const api = initData();
 
 /**
  * Сбор и обработка полей из таблицы
@@ -49,8 +46,20 @@ async function render(action) {
   query = applyPagination(query, state, action);
 
   const { total, items } = await api.getRecords(query);
+
+  let filteredItems = items;
+
+  if (state.totalFrom) {
+    const min = Number(state.totalFrom);
+    filteredItems = filteredItems.filter((row) => Number(row.total) >= min);
+  }
+  if (state.totalTo) {
+    const max = Number(state.totalTo);
+    filteredItems = filteredItems.filter((row) => Number(row.total) <= max);
+  }
+
   updatePagination(total, query);
-  sampleTable.render(items);
+  sampleTable.render(filteredItems);
 }
 
 const sampleTable = initTable(

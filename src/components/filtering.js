@@ -36,6 +36,12 @@ export function initFiltering(elements) {
           ["INPUT", "SELECT"].includes(elements[key].tagName) &&
           elements[key].value
         ) {
+          if (
+            elements[key].name === "totalFrom" ||
+            elements[key].name === "totalTo"
+          ) {
+            return;
+          }
           filter[`filter[${elements[key].name}]`] = elements[key].value;
         }
       }
